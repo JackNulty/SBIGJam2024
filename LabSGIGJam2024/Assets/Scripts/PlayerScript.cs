@@ -8,9 +8,9 @@ public class PlayerScript : MonoBehaviour
 
     //Input variables 
     private InputAction moveInput;
-    private InputAction fireInput;
     [SerializeField] private float moveSpeed = 5f;
     private Vector2 moveDirection = Vector2.zero;
+    public Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
@@ -24,10 +24,14 @@ public class PlayerScript : MonoBehaviour
 
     }
 
+    private void FixedUpdate()
+    {
+        rb.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
+    }
+
     private void OnEnable()
     {
         moveInput = GetComponent<PlayerInput>().actions.FindAction("Move");
-        fireInput = GetComponent<PlayerInput>().actions.FindAction("Fire");
 
         // Subscribe to the move input event
         moveInput.performed += OnMovePerformed;
