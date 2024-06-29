@@ -2788,7 +2788,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrow: {fileID: 740080634}
   player: {fileID: 1660396066}
-  circleRadius: 1.7
+  circleRadius: 1.8
 --- !u!1001 &5081828304938042135
 PrefabInstance:
   m_ObjectHideFlags: 0
