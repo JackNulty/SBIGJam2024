@@ -37,10 +37,6 @@ public class ArrowRotatorScript : MonoBehaviour
         // Calculate the new position of the arrow, maintaining a uniform distance from the player
         Vector2 positionOnCircle = playerPosition + direction * circleRadius;
 
-        // Lock movement along the x-axis and y-axis
-        //positionOnCircle.x = playerPosition.x;
-        //positionOnCircle.y = playerPosition.y;
-
         // Set the arrow's position to the new calculated position
         arrow.position = positionOnCircle;
 
