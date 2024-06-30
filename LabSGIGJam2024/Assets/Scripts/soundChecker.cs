@@ -18,7 +18,7 @@ public class soundChecker : MonoBehaviour
         //this.gameObject.transform.position = player.transform.position;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         GameObject collidedObject = collision.gameObject;
 

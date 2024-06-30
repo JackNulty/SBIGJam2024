@@ -28,10 +28,8 @@ public class StartManager : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log("Collided");
         if (Input.GetKey(KeyCode.Space))
         {
-            Debug.Log("Space pressed");
             canvas.gameObject.SetActive(true);
         }
     }
