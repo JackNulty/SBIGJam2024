@@ -45920,6 +45920,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   rb: {fileID: 1660396062}
+  playerPos: {fileID: 1660396066}
+  Nunchuckes: {fileID: 5757100933284583175, guid: c58f1ebc79baec143a4fbb67e63ed9dd, type: 3}
+  stick: {fileID: 7574819696876367648, guid: a9bdcdcde46187145af7a2f6b48df3db, type: 3}
+  player: {fileID: 1660396061}
 --- !u!114 &1660396064
 MonoBehaviour:
   m_ObjectHideFlags: 0
