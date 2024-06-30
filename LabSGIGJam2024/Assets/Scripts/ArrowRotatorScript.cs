@@ -43,6 +43,5 @@ public class ArrowRotatorScript : MonoBehaviour
         // Calculate the rotation to look at the mouse position, locking the z-axis rotation
         Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward, direction);
         arrow.rotation = targetRotation;
-        Debug.LogError(targetRotation);
     }
 }
