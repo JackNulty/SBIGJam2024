@@ -21,6 +21,7 @@ public class ZombieController : MonoBehaviour
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         //agent.SetDestination(currentTarget);
+        //change
     }
 
     // Update is called once per frame
