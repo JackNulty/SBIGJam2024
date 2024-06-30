@@ -48,5 +48,13 @@ public class ZombieController : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 5f);
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Weapon")
+        {
+            LevelManager.score += 1;
+            Destroy(gameObject);
+        }
+    }
 
 }

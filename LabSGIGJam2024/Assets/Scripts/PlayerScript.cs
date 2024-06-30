@@ -27,7 +27,7 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        RotateTowardsMouse();
     }
 
     private void FixedUpdate()
@@ -76,6 +76,15 @@ public class PlayerScript : MonoBehaviour
 
         SwingMelee weaponScriptStick = stick.GetComponent<SwingMelee>();
         weaponScriptStick.player = playerPos;
+    }
+
+    private void RotateTowardsMouse()
+    {
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 direction = (mousePosition - playerPos.position).normalized;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        playerPos.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 
 }

@@ -11,10 +11,12 @@ public class SwingMelee : MonoBehaviour
 
     private float currentSwingTime = 0f;
 
-    //YIPPPEEE
-
     void Start()
     {
+        Vector3 direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.position).normalized;
+        direction.z = 0;
+        transform.position = player.position + direction * 1.0f; // 1.0f is the distance in front of the player
+        transform.rotation = Quaternion.LookRotation(Vector3.forward, direction);
         StartCoroutine(SwingCoroutine());
     }
 
@@ -33,4 +35,6 @@ public class SwingMelee : MonoBehaviour
 
         Destroy(gameObject);
     }
+
+    
 }
