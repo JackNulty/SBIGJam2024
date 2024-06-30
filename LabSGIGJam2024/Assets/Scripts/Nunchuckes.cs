@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwingMelee : MonoBehaviour
+public class Nunchuckes : MonoBehaviour
 {
     public Transform player;
-    public float swingSpeed = 120f;
-    public float swingDuration = 0.5f;
-    public float despawnDelay = 0.2f;
+    public float swingSpeed = 360f;
+    public float swingDuration = 1.0f;
+    public float despawnDelay = 0.5f;
 
     private float currentSwingTime = 0f;
 

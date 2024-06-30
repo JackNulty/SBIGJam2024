@@ -14,7 +14,9 @@ public class PlayerScript : MonoBehaviour
     private Vector2 moveDirection = Vector2.zero;
     public Rigidbody2D rb;
     public Transform playerPos;
+    public GameObject Nunchuckes;
     public GameObject stick;
+    public GameObject player;
 
     // Start is called before the first frame update
     void Start()
@@ -65,10 +67,15 @@ public class PlayerScript : MonoBehaviour
 
     private void OnAttack(InputAction.CallbackContext context)
     {
-        Instantiate(stick, playerPos.position, Quaternion.identity);
+        //Instantiate(Nunchukes, playerPos.position, Quaternion.identity);
 
-        SwingMelee weaponScript = stick.GetComponent<SwingMelee>();
-        weaponScript.player = playerPos;
+        //Nunchuckes weaponScriptNunchuckes = Nunchuckes.GetComponent<Nunchuckes>();
+        //weaponScriptNunchuckes.player = playerPos;
+
+        Instantiate(stick, playerPos.position, Quaternion.identity, playerPos);
+
+        SwingMelee weaponScriptStick = stick.GetComponent<SwingMelee>();
+        weaponScriptStick.player = playerPos;
     }
 
 }
