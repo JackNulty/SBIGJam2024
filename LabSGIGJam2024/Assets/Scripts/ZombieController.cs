@@ -10,7 +10,7 @@ public class ZombieController : MonoBehaviour
     public Rigidbody2D playerRB;
     public bool moveToPlayer = false;
 
-    // Start is called before the first frame update
+
     void Start()
     {
         if(playerRB != null)
@@ -21,28 +21,15 @@ public class ZombieController : MonoBehaviour
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         //agent.SetDestination(currentTarget);
-        //change
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         
     }
     private void FixedUpdate()
     {
-        if(moveToPlayer == true)
-        {
-            if (playerRB != null)
-            {
-                currentTarget = playerRB.transform.position;
-            }
-            if (currentTarget != null)
-            {
-                RotateTowardsTarget(currentTarget);
-            }
-            agent.SetDestination(currentTarget);
-        }
 
     }
 
@@ -65,6 +52,7 @@ public class ZombieController : MonoBehaviour
 
     public void moveToSound(Vector3 t_soundOrigin)
     {
+        RotateTowardsTarget(t_soundOrigin);
         agent.SetDestination(t_soundOrigin);
     }
 }
