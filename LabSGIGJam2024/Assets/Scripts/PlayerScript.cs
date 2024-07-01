@@ -28,9 +28,9 @@ public class PlayerScript : MonoBehaviour
     public Image tooLoudSound;
     public AudioSource hurtSound;
     public static Weapons currentWeapon;
-    private int currentWeaponIndex = 0; // Start at index 0 (None)
-    private int maxWeaponIndex = 3; // Number of weapons (None, Stick, Nunchuckes, Pistol)
-    private float scrollThreshold = 0.2f; // Scroll threshold to detect one scroll step
+    private int currentWeaponIndex = 0; 
+    private int maxWeaponIndex = 3; 
+    private float scrollThreshold = 0.2f;
     private float lastScrollTime;
     int currentPlayerHealth = 100;
     static int playerHealth = 100;
