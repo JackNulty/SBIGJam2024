@@ -1,7 +1,10 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour
@@ -23,11 +26,14 @@ public class PlayerScript : MonoBehaviour
     public Image audibleSound;
     public Image louderSound;
     public Image tooLoudSound;
+    public AudioSource hurtSound;
     public static Weapons currentWeapon;
     private int currentWeaponIndex = 0; // Start at index 0 (None)
     private int maxWeaponIndex = 3; // Number of weapons (None, Stick, Nunchuckes, Pistol)
     private float scrollThreshold = 0.2f; // Scroll threshold to detect one scroll step
     private float lastScrollTime;
+    int currentPlayerHealth = 100;
+    static int playerHealth = 100;
 
     // Start is called before the first frame update
     void Start()
@@ -90,6 +96,12 @@ public class PlayerScript : MonoBehaviour
         else if (Input.GetKey(KeyCode.Alpha2) == true)
         {
             currentWeapon = Weapons.Nunchuckes;
+        }
+
+        if(playerHealth != currentPlayerHealth)
+        {
+            currentPlayerHealth = playerHealth;
+            playHurtSound();
         }
     }
 
@@ -178,4 +190,19 @@ public class PlayerScript : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 3f);
     }
 
+    void playHurtSound()
+    {
+        hurtSound.Play();
+    }
+
+    public static void damagePlayer(int t_damage)
+    {
+        playerHealth -= t_damage;
+
+        if(playerHealth <= 0)
+        {
+            SceneManager.LoadScene("HomeVillage");
+            Debug.Log("Player Died D:");
+        }
+    }
 }

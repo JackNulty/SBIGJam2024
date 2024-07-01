@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class ZombieController : MonoBehaviour
 {
@@ -9,7 +10,12 @@ public class ZombieController : MonoBehaviour
     NavMeshAgent agent;
     public Rigidbody2D playerRB;
     public bool moveToPlayer = false;
+    private float repelForce = 1f;
 
+    Vector3 lockedPosition = Vector3.zero;
+    bool dementia = false;
+    int rememberTimer = 0;
+    int howLongToRemember = 30;
 
     void Start()
     {
@@ -30,7 +36,18 @@ public class ZombieController : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if(dementia == true)
+        {
+            //transform.position = lockedPosition;
+            
 
+            rememberTimer--;
+            if(rememberTimer == 0)
+            {
+                dementia = false;
+                agent.Resume();
+            }
+        }
     }
 
     void RotateTowardsTarget(Vector3 targetPosition)
@@ -39,6 +56,32 @@ public class ZombieController : MonoBehaviour
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         Quaternion rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 5f);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Player")
+        {
+            PlayerScript.damagePlayer(22);
+            Debug.Log("playerHasBeenHit");
+            Repel(collision);
+        }
+    }
+
+    private void Repel(Collision2D collision)
+    {
+        Vector2 enemyPosition = transform.position;
+        Vector2 playerPosition = collision.transform.position;
+        Vector2 repelDirection = enemyPosition - playerPosition;
+        repelDirection.Normalize();
+
+        transform.position = enemyPosition + repelDirection * repelForce;
+
+        lockedPosition = transform.position;
+        dementia = true;
+        rememberTimer = howLongToRemember;
+        agent.Stop();
+        agent.velocity = Vector3.zero;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
