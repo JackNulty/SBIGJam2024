@@ -23,6 +23,11 @@ public class PlayerScript : MonoBehaviour
     public Image audibleSound;
     public Image louderSound;
     public Image tooLoudSound;
+    public static Weapons currentWeapon;
+    private int currentWeaponIndex = 0; // Start at index 0 (None)
+    private int maxWeaponIndex = 3; // Number of weapons (None, Stick, Nunchuckes, Pistol)
+    private float scrollThreshold = 0.2f; // Scroll threshold to detect one scroll step
+    private float lastScrollTime;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +42,7 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
         RotateTowardsMouse();
+        HandleScrollInput();
     }
 
     private void FixedUpdate()
@@ -76,8 +82,38 @@ public class PlayerScript : MonoBehaviour
             louderSound.gameObject.SetActive(false);
             tooLoudSound.gameObject.SetActive(false);
         }
+
+        if (Input.GetKey(KeyCode.Alpha1) == true)
+        {
+            currentWeapon = Weapons.Stick;
+        }
+        else if (Input.GetKey(KeyCode.Alpha2) == true)
+        {
+            currentWeapon = Weapons.Nunchuckes;
+        }
     }
 
+    void HandleScrollInput()
+    {
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+
+        if (Mathf.Abs(scroll) > 0 && Time.time - lastScrollTime > scrollThreshold)
+        {
+            if (scroll > 0)
+            {
+                currentWeaponIndex = (currentWeaponIndex + 1) % (maxWeaponIndex + 1);
+            }
+            else if (scroll < 0)
+            {
+                currentWeaponIndex = (currentWeaponIndex - 1 + (maxWeaponIndex + 1)) % (maxWeaponIndex + 1);
+            }
+
+            Debug.Log("Current Weapon: " + (Weapons)currentWeaponIndex);
+            currentWeapon = (Weapons)currentWeaponIndex;
+            Debug.Log(currentWeapon.ToString());
+            lastScrollTime = Time.time;
+        }
+    }
 
     private void OnEnable()
     {
@@ -111,15 +147,25 @@ public class PlayerScript : MonoBehaviour
 
     private void OnAttack(InputAction.CallbackContext context)
     {
-        //Instantiate(Nunchukes, playerPos.position, Quaternion.identity);
+        if(currentWeapon == Weapons.Nunchuckes)
+        {
+            Instantiate(Nunchuckes, playerPos.position, Quaternion.identity);
 
-        //Nunchuckes weaponScriptNunchuckes = Nunchuckes.GetComponent<Nunchuckes>();
-        //weaponScriptNunchuckes.player = playerPos;
+            Nunchuckes weaponScriptNunchuckes = Nunchuckes.GetComponent<Nunchuckes>();
+            weaponScriptNunchuckes.player = playerPos;
+        }
+        else if (currentWeapon == Weapons.Stick)
+        {
+            Instantiate(stick, playerPos.position, Quaternion.identity, playerPos);
 
-        Instantiate(stick, playerPos.position, Quaternion.identity, playerPos);
+            SwingMelee weaponScriptStick = stick.GetComponent<SwingMelee>();
+            weaponScriptStick.player = playerPos;
+        }
+        else
+        {
+            return;
+        }
 
-        SwingMelee weaponScriptStick = stick.GetComponent<SwingMelee>();
-        weaponScriptStick.player = playerPos;
     }
 
     private void RotateTowardsMouse()
