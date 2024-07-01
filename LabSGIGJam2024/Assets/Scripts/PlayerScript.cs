@@ -18,11 +18,19 @@ public class PlayerScript : MonoBehaviour
     public GameObject stick;
     public GameObject player;
     public GameObject soundCircle;
+    public Image lowSound;
+    public Image normalSound;
+    public Image audibleSound;
+    public Image louderSound;
+    public Image tooLoudSound;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        normalSound.gameObject.SetActive(false);
+        audibleSound.gameObject.SetActive(false);
+        louderSound.gameObject.SetActive(false);
+        tooLoudSound.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -37,20 +45,36 @@ public class PlayerScript : MonoBehaviour
         {
             rb.velocity = new Vector2(moveDirection.x * (moveSpeed * 1.5f), moveDirection.y * (moveSpeed * 1.5f));
             soundCircle.transform.localScale = new Vector2(14, 14);
+            louderSound.gameObject.SetActive(true);
+            normalSound.gameObject.SetActive(true);
+            audibleSound.gameObject.SetActive(true);
         }
         else if (Input.GetKey(KeyCode.C))
         {
             rb.velocity = new Vector2(moveDirection.x * (moveSpeed * 0.5f), moveDirection.y * (moveSpeed * 0.5f));
             soundCircle.transform.localScale = new Vector2(5, 5);
+            normalSound.gameObject.SetActive(true);
+            audibleSound.gameObject.SetActive(false);
+            louderSound.gameObject.SetActive(false);
+            tooLoudSound.gameObject.SetActive(false);
         }
         else
         {
             rb.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
             soundCircle.transform.localScale = new Vector2(9, 9);
+            audibleSound.gameObject.SetActive(true);
+            normalSound.gameObject.SetActive(true);
+            louderSound.gameObject.SetActive(false);
+            tooLoudSound.gameObject.SetActive(false);
         }
         if (Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.S) == false && Input.GetKey(KeyCode.D) == false)
         {
             soundCircle.transform.localScale = new Vector2(3, 3);
+
+            normalSound.gameObject.SetActive(false);
+            audibleSound.gameObject.SetActive(false);
+            louderSound.gameObject.SetActive(false);
+            tooLoudSound.gameObject.SetActive(false);
         }
     }
 
