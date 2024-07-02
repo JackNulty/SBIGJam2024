@@ -19,6 +19,7 @@ public class PlayerScript : MonoBehaviour
     public Transform playerPos;
     public GameObject Nunchuckes;
     public GameObject stick;
+    public GameObject bulletPrefab;
     public GameObject player;
     public GameObject soundCircle;
     public Image lowSound;
@@ -97,6 +98,10 @@ public class PlayerScript : MonoBehaviour
         {
             currentWeapon = Weapons.Nunchuckes;
         }
+        else if (Input.GetKey(KeyCode.Alpha3) == true)
+        {
+            currentWeapon = Weapons.Pistol;
+        }
 
         if(playerHealth != currentPlayerHealth)
         {
@@ -172,6 +177,10 @@ public class PlayerScript : MonoBehaviour
 
             SwingMelee weaponScriptStick = stick.GetComponent<SwingMelee>();
             weaponScriptStick.player = playerPos;
+        }
+        else if(currentWeapon == Weapons.Pistol)
+        {
+            Instantiate(bulletPrefab, gameObject.transform.position, transform.rotation);
         }
         else
         {
