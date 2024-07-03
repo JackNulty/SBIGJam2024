@@ -8,22 +8,26 @@ public class bulletMover : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-         transform.Translate(Vector2.up * Time.deltaTime * speed);
+        transform.Translate(Vector2.up * Time.deltaTime * speed);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Enemy")
         {
             Destroy(collision.gameObject);
             Destroy(this.gameObject);
-            LevelManager.score += 1;
+            //LevelManager.score += 1;
+        }
+        if (collision.gameObject.tag == "Walls")
+        {
+            Destroy(this.gameObject);
         }
     }
 }
