@@ -8,6 +8,7 @@ TagManager:
   - Nunchuckes
   - Stick
   - Enemy
+  - Walls
   layers:
   - Default
   - TransparentFX
