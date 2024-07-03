@@ -35,6 +35,11 @@ public class PlayerScript : MonoBehaviour
     private float lastScrollTime;
     int currentPlayerHealth = 100;
     static int playerHealth = 100;
+    public float swingDuration = 0.7f; // Duration of the sword swing
+    public float swingAngle = 90f; // Total angle of the swing
+    public float startAngleOffset = -40f;
+    public float swordOffsetDistance = 0.5f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -173,10 +178,11 @@ public class PlayerScript : MonoBehaviour
         }
         else if (currentWeapon == Weapons.Stick)
         {
-            Instantiate(stick, playerPos.position, Quaternion.identity, playerPos);
+            //Instantiate(stick, playerPos.position, Quaternion.identity, playerPos);
 
-            SwingMelee weaponScriptStick = stick.GetComponent<SwingMelee>();
-            weaponScriptStick.player = playerPos;
+            //SwingMelee weaponScriptStick = stick.GetComponent<SwingMelee>();
+            //weaponScriptStick.player = playerPos;
+            StartCoroutine(SwingSword());
         }
         else if(currentWeapon == Weapons.Pistol)
         {
@@ -186,6 +192,39 @@ public class PlayerScript : MonoBehaviour
         {
             return;
         }
+
+    }
+
+    IEnumerator SwingSword()
+    {
+        // Instantiate the sword
+        GameObject sword = Instantiate(stick, transform.position, Quaternion.identity, transform);
+
+        // Get the sword's transform
+        Transform swordTransform = sword.transform;
+
+        // Calculate direction from player to mouse position
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 direction = mousePosition - transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        // Set initial rotation
+        Vector3 initialRotation = new Vector3(0, 0, angle - swingAngle / 2);
+        swordTransform.localEulerAngles = initialRotation;
+
+        // Swing logic
+        float swingTimer = 0f;
+        while (swingTimer < swingDuration)
+        {
+            swingTimer += Time.deltaTime;
+            float progress = swingTimer / swingDuration;
+            float currentAngle = Mathf.Lerp(0, swingAngle, progress);
+            swordTransform.localEulerAngles = initialRotation + new Vector3(0, 0, currentAngle);
+            yield return null;
+        }
+
+        // Destroy the sword after the swing
+        Destroy(sword);
 
     }
 

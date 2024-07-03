@@ -72625,6 +72625,10 @@ MonoBehaviour:
   louderSound: {fileID: 790532903}
   tooLoudSound: {fileID: 465091326}
   hurtSound: {fileID: 370222402}
+  swingDuration: 0.7
+  swingAngle: 90
+  startAngleOffset: -40
+  swordOffsetDistance: 0.5
 --- !u!114 &1660396064
 MonoBehaviour:
   m_ObjectHideFlags: 0
