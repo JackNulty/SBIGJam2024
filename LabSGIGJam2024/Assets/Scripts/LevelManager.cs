@@ -11,6 +11,7 @@ public class LevelManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public Image slot1;
     public Image slot2;
+    public Image slot3;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +37,15 @@ public class LevelManager : MonoBehaviour
         else
         {
             slot2.color= Color.blue;
+        }
+
+        if (PlayerScript.currentWeapon == Weapons.Pistol)
+        {
+            slot3.color = Color.red;
+        }
+        else
+        {
+            slot3.color = Color.blue;
         }
     }
 
