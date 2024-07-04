@@ -17,6 +17,8 @@ public class ZombieController : MonoBehaviour
     int rememberTimer = 0;
     int howLongToRemember = 30;
 
+    public GameObject BloodBath;
+
     void Start()
     {
         if(playerRB != null)
@@ -90,6 +92,7 @@ public class ZombieController : MonoBehaviour
         {
             LevelManager.score += 1;
             Destroy(gameObject);
+            Instantiate(BloodBath,transform.position, Quaternion.identity);
         }
     }
 
