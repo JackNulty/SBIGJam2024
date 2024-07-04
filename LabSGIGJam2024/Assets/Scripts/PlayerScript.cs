@@ -33,15 +33,11 @@ public class PlayerScript : MonoBehaviour
     public AudioSource hurtSound;
     public static Weapons currentWeapon;
     private int currentWeaponIndex = 0; 
-    private int maxWeaponIndex = 3; 
+    private int maxWeaponIndex = 4; 
     private float scrollThreshold = 0.2f;
     private float lastScrollTime;
     int currentPlayerHealth = 100;
-    static int playerHealth = 100;
-    //public float swingDuration = 0.7f; // Duration of the sword swing
-    //public float swingAngle = 90f; // Total angle of the swing
-    //public float startAngleOffset = -40f;
-    //public float swordOffsetDistance = 0.5f;
+    public static int playerHealth = 100;
 
     bool swingWeapon = false;
     float currentAngle = 0.0f;
@@ -119,7 +115,11 @@ public class PlayerScript : MonoBehaviour
         {
             currentWeapon = Weapons.Nunchuckes;
         }
-        else if (Input.GetKey(KeyCode.Alpha3) == true)
+        else if(Input.GetKey(KeyCode.Alpha3) == true)
+        {
+            currentWeapon = Weapons.Bat;
+        }
+        else if (Input.GetKey(KeyCode.Alpha4) == true)
         {
             currentWeapon = Weapons.Pistol;
         }
@@ -137,11 +137,11 @@ public class PlayerScript : MonoBehaviour
 
         if (Mathf.Abs(scroll) > 0 && Time.time - lastScrollTime > scrollThreshold)
         {
-            if (scroll > 0)
+            if (scroll < 0)
             {
                 currentWeaponIndex = (currentWeaponIndex + 1) % (maxWeaponIndex + 1);
             }
-            else if (scroll < 0)
+            else if (scroll > 0)
             {
                 currentWeaponIndex = (currentWeaponIndex - 1 + (maxWeaponIndex + 1)) % (maxWeaponIndex + 1);
             }
@@ -194,11 +194,6 @@ public class PlayerScript : MonoBehaviour
         }
         else if (currentWeapon == Weapons.Stick)
         {
-            //Instantiate(stick, playerPos.position, Quaternion.identity, playerPos);
-
-            //SwingMelee weaponScriptStick = stick.GetComponent<SwingMelee>();
-            //weaponScriptStick.player = playerPos;
-            //StartCoroutine(SwingSword());
             if (swingWeapon== false)
             {
                 stickWeapon.gameObject.SetActive(true);
@@ -206,9 +201,18 @@ public class PlayerScript : MonoBehaviour
                 weaponHolder.transform.localRotation = Quaternion.Euler(0, 0, currentAngle);
                 swingWeapon = true;
                 
+            }  
+        }
+        else if (currentWeapon == Weapons.Bat)
+        {
+            if (swingWeapon == false)
+            {
+                batWeapon.gameObject.SetActive(true);
+                currentAngle = -60.0f;
+                weaponHolder.transform.localRotation = Quaternion.Euler(0, 0, currentAngle);
+                swingWeapon = true;
+
             }
-            
-           
         }
         else if(currentWeapon == Weapons.Pistol)
         {
@@ -220,40 +224,6 @@ public class PlayerScript : MonoBehaviour
         }
 
     }
-
-
-    //IEnumerator SwingSword()
-    //{
-    //    // Instantiate the sword
-    //    GameObject sword = Instantiate(stick, transform.position, Quaternion.identity, transform);
-
-    //    // Get the sword's transform
-    //    Transform swordTransform = sword.transform;
-
-    //    // Calculate direction from player to mouse position
-    //    Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    //    Vector3 direction = mousePosition - transform.position;
-    //    float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-    //    // Set initial rotation
-    //    Vector3 initialRotation = new Vector3(0, 0, angle - swingAngle / 2);
-    //    swordTransform.localEulerAngles = initialRotation;
-
-    //    // Swing logic
-    //    float swingTimer = 0f;
-    //    while (swingTimer < swingDuration)
-    //    {
-    //        swingTimer += Time.deltaTime;
-    //        float progress = swingTimer / swingDuration;
-    //        float currentAngle = Mathf.Lerp(0, swingAngle, progress);
-    //        swordTransform.localEulerAngles = initialRotation + new Vector3(0, 0, currentAngle);
-    //        yield return null;
-    //    }
-
-    //    // Destroy the sword after the swing
-    //    Destroy(sword);
-
-    //}
 
     private void RotateTowardsMouse()
     {

@@ -249,6 +249,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerRB: {fileID: 0}
   moveToPlayer: 0
+  BloodBath: {fileID: 81303868659770437, guid: af261b8bc568cc94595465749c5765a7, type: 3}
 --- !u!195 &7316690988569026510
 NavMeshAgent:
   m_ObjectHideFlags: 0
