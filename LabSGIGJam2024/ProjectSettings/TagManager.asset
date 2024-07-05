@@ -9,6 +9,7 @@ TagManager:
   - Stick
   - Enemy
   - Walls
+  - NigelSquare
   layers:
   - Default
   - TransparentFX
