@@ -27,6 +27,7 @@ public class PlayerScript : MonoBehaviour
     public GameObject batWeapon;
     public GameObject assaultRifle;
     public GameObject visualPistol;
+    public GameObject NigelActivationSquare;
     public Image lowSound;
     public Image normalSound;
     public Image audibleSound;
