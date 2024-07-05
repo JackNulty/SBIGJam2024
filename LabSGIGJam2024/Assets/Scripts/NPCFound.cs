@@ -13,10 +13,12 @@ public class NPCFound : MonoBehaviour
     private bool readyToGo = false;
     private bool readyToGo2 = false;//this is scuffed
 
+    private float rotation = 0;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        rotation = parent.transform.rotation.z;
     }
 
     // Update is called once per frame
@@ -24,14 +26,18 @@ public class NPCFound : MonoBehaviour
     {
         if(yippee.isPlaying == true)
         {
+            parent.transform.rotation = Quaternion.Euler(0, 0, rotation);
+            rotation+=4;
             readyToGo = true;
         }
         if (yippee2.isPlaying == true)
         {
+            parent.transform.rotation = Quaternion.Euler(0, 0, rotation);
+            rotation+=10;
             readyToGo2 = true;
         }
-
-        if(readyToGo == true && yippee.isPlaying == false)//says yippee then fucking dies
+        
+        if (readyToGo == true && yippee.isPlaying == false)//says yippee then fucking dies
         {
             Destroy(parent);
         }
