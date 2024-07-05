@@ -26,6 +26,7 @@ public class PlayerScript : MonoBehaviour
     public GameObject stickWeapon;
     public GameObject batWeapon;
     public GameObject assaultRifle;
+    public GameObject visualPistol;
     public Image lowSound;
     public Image normalSound;
     public Image audibleSound;
@@ -55,6 +56,7 @@ public class PlayerScript : MonoBehaviour
         audibleSound.gameObject.SetActive(false);
         louderSound.gameObject.SetActive(false);
         tooLoudSound.gameObject.SetActive(false);
+        visualPistol.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -68,7 +70,13 @@ public class PlayerScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(swingWeapon == true)
+        if(currentWeapon == Weapons.Pistol)
+        {
+            visualPistol.gameObject.SetActive(true);
+        }
+        else visualPistol.gameObject.SetActive(false);
+
+        if (swingWeapon == true)
         {
             weaponHolder.transform.localRotation = Quaternion.Euler(0, 0, currentAngle);
             currentAngle += 5;
@@ -137,7 +145,7 @@ public class PlayerScript : MonoBehaviour
             currentWeapon= Weapons.AR;
         }
 
-        if(playerHealth != currentPlayerHealth)
+        if (playerHealth != currentPlayerHealth)
         {
             currentPlayerHealth = playerHealth;
             playHurtSound();
