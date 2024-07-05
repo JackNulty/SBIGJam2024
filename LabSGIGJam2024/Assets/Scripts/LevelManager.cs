@@ -14,6 +14,7 @@ public class LevelManager : MonoBehaviour
     public Image slot2;
     public Image slot3;
     public Image slot4;
+    public Image slot5;
 
     // Start is called before the first frame update
     void Start()
@@ -57,6 +58,15 @@ public class LevelManager : MonoBehaviour
         else
         {
             slot4.color = Color.blue;
+        }
+
+        if (PlayerScript.currentWeapon == Weapons.AR)
+        {
+            slot5.color = Color.red;
+        }
+        else
+        {
+            slot5.color = Color.blue;
         }
     }
 
