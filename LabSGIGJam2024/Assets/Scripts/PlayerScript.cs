@@ -25,6 +25,7 @@ public class PlayerScript : MonoBehaviour
     public GameObject weaponHolder;
     public GameObject stickWeapon;
     public GameObject batWeapon;
+    public GameObject assaultRifle;
     public Image lowSound;
     public Image normalSound;
     public Image audibleSound;
@@ -33,7 +34,7 @@ public class PlayerScript : MonoBehaviour
     public AudioSource hurtSound;
     public static Weapons currentWeapon;
     private int currentWeaponIndex = 0; 
-    private int maxWeaponIndex = 4; 
+    private int maxWeaponIndex = 5; 
     private float scrollThreshold = 0.2f;
     private float lastScrollTime;
     int currentPlayerHealth = 100;
@@ -43,6 +44,9 @@ public class PlayerScript : MonoBehaviour
     float currentAngle = 0.0f;
 
     int gunshotTimer = 0;
+    int gunshotTimerAR = 0;
+    private int timer = 0;
+    public int fireRateInFrames = 3;
 
     // Start is called before the first frame update
     void Start()
@@ -58,6 +62,8 @@ public class PlayerScript : MonoBehaviour
     {
         RotateTowardsMouse();
         HandleScrollInput();
+
+        
     }
 
     private void FixedUpdate()
@@ -126,6 +132,10 @@ public class PlayerScript : MonoBehaviour
         {
             currentWeapon = Weapons.Pistol;
         }
+        else if ( Input.GetKey(KeyCode.Alpha5) == true)
+        {
+            currentWeapon= Weapons.AR;
+        }
 
         if(playerHealth != currentPlayerHealth)
         {
@@ -138,9 +148,40 @@ public class PlayerScript : MonoBehaviour
             gunshotTimer--;
             gunshotActive();
         }
+
+        if (gunshotTimerAR > 0)
+        {
+            gunshotTimerAR--;
+            gunshotActiveAR();
+        }
+
+        if (timer > 0)
+        {
+            timer--;
+        }
+
+        if (Input.GetMouseButton(0) && timer <= 0)
+        {
+            if (currentWeapon == Weapons.AR)
+            {
+                Instantiate(bulletPrefab, gameObject.transform.position, transform.rotation);
+                gunshotTimerAR = 20;
+                gunshotActive();
+                timer = fireRateInFrames;
+            }
+        }
     }
 
     void gunshotActive()
+    {
+        normalSound.gameObject.SetActive(true);
+        audibleSound.gameObject.SetActive(true);
+        louderSound.gameObject.SetActive(true);
+        tooLoudSound.gameObject.SetActive(true);
+        soundCircle.transform.localScale = new Vector2(30, 30);
+    }
+
+    void gunshotActiveAR()
     {
         normalSound.gameObject.SetActive(true);
         audibleSound.gameObject.SetActive(true);
