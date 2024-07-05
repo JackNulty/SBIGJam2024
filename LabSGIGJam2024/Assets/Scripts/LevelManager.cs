@@ -65,6 +65,8 @@ public class LevelManager : MonoBehaviour
     {
         scoreText.text = "Grandparents Harmed: " + score;
 
-        healthBar.fillAmount = PlayerScript.playerHealth * 2;
+        Vector2 size = new Vector2(PlayerScript.playerHealth * 4, 35);
+        healthBar.rectTransform.sizeDelta = size;
+        //healthBar.fillAmount = PlayerScript.playerHealth * 2;
     }
 }

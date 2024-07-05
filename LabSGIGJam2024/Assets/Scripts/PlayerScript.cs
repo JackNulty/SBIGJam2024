@@ -42,6 +42,8 @@ public class PlayerScript : MonoBehaviour
     bool swingWeapon = false;
     float currentAngle = 0.0f;
 
+    int gunshotTimer = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -67,6 +69,7 @@ public class PlayerScript : MonoBehaviour
             if(currentAngle > 60.0f)
             {
                 stickWeapon.gameObject.SetActive(false);
+                batWeapon.gameObject.SetActive(false);
                 swingWeapon = false;
             }
         }
@@ -129,6 +132,21 @@ public class PlayerScript : MonoBehaviour
             currentPlayerHealth = playerHealth;
             playHurtSound();
         }
+
+        if(gunshotTimer > 0)
+        {
+            gunshotTimer--;
+            gunshotActive();
+        }
+    }
+
+    void gunshotActive()
+    {
+        normalSound.gameObject.SetActive(true);
+        audibleSound.gameObject.SetActive(true);
+        louderSound.gameObject.SetActive(true);
+        tooLoudSound.gameObject.SetActive(true);
+        soundCircle.transform.localScale = new Vector2(30, 30);
     }
 
     void HandleScrollInput()
@@ -217,6 +235,8 @@ public class PlayerScript : MonoBehaviour
         else if(currentWeapon == Weapons.Pistol)
         {
             Instantiate(bulletPrefab, gameObject.transform.position, transform.rotation);
+            gunshotTimer = 20;
+            gunshotActive();
         }
         else
         {
@@ -248,6 +268,14 @@ public class PlayerScript : MonoBehaviour
         {
             SceneManager.LoadScene("HomeVillage");
             Debug.Log("Player Died D:");
+        }
+    }
+
+    private void LateUpdate()
+    {
+        if (playerHealth <= 0)
+        {
+            playerHealth = 100;
         }
     }
 }
