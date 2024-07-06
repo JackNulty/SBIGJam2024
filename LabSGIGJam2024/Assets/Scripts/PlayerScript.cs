@@ -253,6 +253,8 @@ public class PlayerScript : MonoBehaviour
 
     private void OnAttack(InputAction.CallbackContext context)
     {
+        companionMovement.MakeCompanionMelee();
+
         if(currentWeapon == Weapons.Nunchuckes)
         {
             Instantiate(Nunchuckes, playerPos.position, Quaternion.identity);
