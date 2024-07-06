@@ -34,9 +34,21 @@ public class StartManager : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Player")
+        {
+            canvas.gameObject.SetActive(true);
+        }  
+    }
+
     public void onStartButtonPressed()
     {
-        SceneManager.LoadScene("SampleScene");
+        if(SceneManager.GetActiveScene() == SceneManager.GetSceneByName("SampleScene"))
+        {
+            SceneManager.LoadScene("HomeVillage");
+        }
+        else SceneManager.LoadScene("SampleScene");
     }
 
     public void onWaitButtonPressed()
