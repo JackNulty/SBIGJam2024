@@ -28,12 +28,15 @@ public class PlayerScript : MonoBehaviour
     public GameObject assaultRifle;
     public GameObject visualPistol;
     public GameObject NigelActivationSquare;
+    public GameObject gunshotPrefab;
     public Image lowSound;
     public Image normalSound;
     public Image audibleSound;
     public Image louderSound;
     public Image tooLoudSound;
     public AudioSource hurtSound;
+    public AudioSource swingsound;
+    public AudioSource shootSound;
     public static Weapons currentWeapon;
     private int currentWeaponIndex = 0; 
     private int maxWeaponIndex = 5; 
@@ -164,6 +167,7 @@ public class PlayerScript : MonoBehaviour
             gunshotActiveAR();
         }
 
+
         if (timer > 0)
         {
             timer--;
@@ -174,6 +178,8 @@ public class PlayerScript : MonoBehaviour
             if (currentWeapon == Weapons.AR)
             {
                 Instantiate(bulletPrefab, gameObject.transform.position, transform.rotation);
+                Instantiate(gunshotPrefab, gameObject.transform.position, gameObject.transform.rotation);
+
                 gunshotTimerAR = 20;
                 gunshotActive();
                 timer = fireRateInFrames;
@@ -261,6 +267,7 @@ public class PlayerScript : MonoBehaviour
 
             Nunchuckes weaponScriptNunchuckes = Nunchuckes.GetComponent<Nunchuckes>();
             weaponScriptNunchuckes.player = playerPos;
+            swingsound.Play();
         }
         else if (currentWeapon == Weapons.Stick)
         {
@@ -269,6 +276,7 @@ public class PlayerScript : MonoBehaviour
                 stickWeapon.gameObject.SetActive(true);
                 currentAngle = -60.0f;
                 weaponHolder.transform.localRotation = Quaternion.Euler(0, 0, currentAngle);
+                swingsound.Play();
                 swingWeapon = true;
                 
             }  
@@ -280,6 +288,7 @@ public class PlayerScript : MonoBehaviour
                 batWeapon.gameObject.SetActive(true);
                 currentAngle = -60.0f;
                 weaponHolder.transform.localRotation = Quaternion.Euler(0, 0, currentAngle);
+                swingsound.Play();
                 swingWeapon = true;
 
             }
@@ -288,6 +297,7 @@ public class PlayerScript : MonoBehaviour
         {
             Instantiate(bulletPrefab, gameObject.transform.position, transform.rotation);
             gunshotTimer = 20;
+            Instantiate(gunshotPrefab, gameObject.transform.position, gameObject.transform.rotation);
             gunshotActive();
         }
         else
