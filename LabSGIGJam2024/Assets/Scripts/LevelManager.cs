@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class LevelManager : MonoBehaviour
 {
 
-    public static int score;
+    public static int score=0;
     public TextMeshProUGUI scoreText;
     public Image healthBar;
     public Image slot1;
@@ -19,7 +19,7 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        score = SaveData.Dentures;
     }
 
     void Update()
