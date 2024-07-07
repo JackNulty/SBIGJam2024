@@ -21,6 +21,8 @@ public class ZombieController : MonoBehaviour
 
     void Start()
     {
+        LevelManager.score = SaveData.Dentures;
+
         if(playerRB != null)
         {
             currentTarget = playerRB.transform.position;
@@ -90,6 +92,7 @@ public class ZombieController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Weapon")
         {
+            SaveData.Dentures += 1;
             LevelManager.score += 1;
             Destroy(gameObject);
             Instantiate(BloodBath,transform.position, Quaternion.identity);
