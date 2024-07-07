@@ -13,6 +13,8 @@ public class StartManager : MonoBehaviour
     public UnityEngine.UI.Button StartButton;
     public UnityEngine.UI.Button WaitButton;
 
+    public Canvas interactPrompt;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,9 +30,14 @@ public class StartManager : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+        {
+            interactPrompt.gameObject.SetActive(true);
+        }
+
         if (Input.GetKey(KeyCode.Space))
         {
-            canvas.gameObject.SetActive(true);
+            canvas.gameObject.SetActive(true); interactPrompt.gameObject.SetActive(true);
         }
     }
 
@@ -39,7 +46,16 @@ public class StartManager : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             canvas.gameObject.SetActive(true);
-        }  
+            interactPrompt.gameObject.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+        {
+            interactPrompt.gameObject.SetActive(false);
+        }
     }
 
     public void onStartButtonPressed()
