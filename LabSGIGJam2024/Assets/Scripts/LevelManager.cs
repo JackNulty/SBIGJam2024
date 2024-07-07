@@ -15,6 +15,7 @@ public class LevelManager : MonoBehaviour
     public Image slot3;
     public Image slot4;
     public Image slot5;
+    
 
     // Start is called before the first frame update
     void Start()

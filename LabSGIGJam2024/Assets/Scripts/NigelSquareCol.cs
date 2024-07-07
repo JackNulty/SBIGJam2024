@@ -6,6 +6,7 @@ public class NigelSquareCol : MonoBehaviour
 {
     public static bool activateNigelQuestMenu = false;
     public static bool nigelQuestComp = false;
+    public GameObject interactPrompt;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +34,11 @@ public class NigelSquareCol : MonoBehaviour
                 Debug.Log("NIgel quest has been complete");
                 PlayerScript.currentWeapon = Weapons.Nigel;
             }
+        }
+
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+        {
+            interactPrompt.SetActive(true);
         }
     }
 }

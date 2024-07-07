@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
@@ -12,6 +13,7 @@ public class StartManager : MonoBehaviour
     public Canvas canvas;
     public UnityEngine.UI.Button StartButton;
     public UnityEngine.UI.Button WaitButton;
+    public TextMeshProUGUI scoreText;
 
     public Canvas interactPrompt;
 
@@ -25,7 +27,7 @@ public class StartManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        scoreText.text = "Grandparents Harmed: " + SaveData.Dentures;
     }
 
     private void OnTriggerStay2D(Collider2D collision)
