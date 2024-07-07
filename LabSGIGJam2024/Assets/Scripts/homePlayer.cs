@@ -28,6 +28,7 @@ public class homePlayer : MonoBehaviour
     //public GameObject assaultRifle;
     //public GameObject visualPistol;
     //public GameObject NigelActivationSquare;
+    public GameObject walkSound;
     //public Image lowSound;
     //public Image normalSound;
     //public Image audibleSound;
@@ -49,6 +50,9 @@ public class homePlayer : MonoBehaviour
     //int gunshotTimerAR = 0;
     //private int timer = 0;
     //public int fireRateInFrames = 3;
+
+    private int footstepTimer = 0;
+    private int walkPace = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -91,6 +95,7 @@ public class homePlayer : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
+            walkPace = 1;
             rb.velocity = new Vector2(moveDirection.x * (moveSpeed * 1.5f), moveDirection.y * (moveSpeed * 1.5f));
             //soundCircle.transform.localScale = new Vector2(14, 14);
             //louderSound.gameObject.SetActive(true);
@@ -99,6 +104,7 @@ public class homePlayer : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.C))
         {
+            walkPace = 3;
             rb.velocity = new Vector2(moveDirection.x * (moveSpeed * 0.5f), moveDirection.y * (moveSpeed * 0.5f));
             //soundCircle.transform.localScale = new Vector2(5, 5);
             //normalSound.gameObject.SetActive(true);
@@ -108,6 +114,7 @@ public class homePlayer : MonoBehaviour
         }
         else
         {
+            walkPace = 2;
             rb.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
             //soundCircle.transform.localScale = new Vector2(9, 9);
             //audibleSound.gameObject.SetActive(true);
@@ -117,6 +124,7 @@ public class homePlayer : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.S) == false && Input.GetKey(KeyCode.D) == false)
         {
+            walkPace = 0;
             //soundCircle.transform.localScale = new Vector2(3, 3);
 
             //normalSound.gameObject.SetActive(false);
@@ -124,6 +132,22 @@ public class homePlayer : MonoBehaviour
             //louderSound.gameObject.SetActive(false);
             //tooLoudSound.gameObject.SetActive(false);
         }
+        if (walkPace != 0 && footstepTimer <= 0)
+        {
+            footstepTimer = walkPace * 10;
+        }
+
+        footstepTimer--;
+        if (footstepTimer < 0)
+        {
+            footstepTimer = 0;
+        }
+
+        if (footstepTimer == 1)
+        {
+            Instantiate(walkSound, this.transform);
+        }
+
 
         if (Input.GetKey(KeyCode.Alpha1) == true)
         {
