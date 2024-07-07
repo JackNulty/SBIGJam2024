@@ -25,19 +25,17 @@ public class PlayerScript : MonoBehaviour
     public GameObject weaponHolder;
     public GameObject stickWeapon;
     public GameObject batWeapon;
+    public GameObject nigelWeapon;
     public GameObject assaultRifle;
     public GameObject visualPistol;
     public GameObject NigelActivationSquare;
-    public GameObject gunshotPrefab;
-    public GameObject walkSound;
+    public GameObject Onion;
     public Image lowSound;
     public Image normalSound;
     public Image audibleSound;
     public Image louderSound;
     public Image tooLoudSound;
     public AudioSource hurtSound;
-    public AudioSource swingsound;
-    public AudioSource shootSound;
     public static Weapons currentWeapon;
     private int currentWeaponIndex = 0; 
     private int maxWeaponIndex = 5; 
@@ -45,6 +43,7 @@ public class PlayerScript : MonoBehaviour
     private float lastScrollTime;
     int currentPlayerHealth = 100;
     public static int playerHealth = 100;
+    public static bool onionCollected = false;
 
     bool swingWeapon = false;
     float currentAngle = 0.0f;
@@ -53,9 +52,6 @@ public class PlayerScript : MonoBehaviour
     int gunshotTimerAR = 0;
     private int timer = 0;
     public int fireRateInFrames = 3;
-
-    private int footstepTimer = 0;
-    private int walkPace = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -71,9 +67,10 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
         RotateTowardsMouse();
-        HandleScrollInput();
-
-        
+        if(currentWeapon != Weapons.Nigel)
+        {
+            HandleScrollInput();
+        }
     }
 
     private void FixedUpdate()
@@ -92,13 +89,13 @@ public class PlayerScript : MonoBehaviour
             {
                 stickWeapon.gameObject.SetActive(false);
                 batWeapon.gameObject.SetActive(false);
+                nigelWeapon.gameObject.SetActive(false);
                 swingWeapon = false;
             }
         }
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            walkPace = 1;
             rb.velocity = new Vector2(moveDirection.x * (moveSpeed * 1.5f), moveDirection.y * (moveSpeed * 1.5f));
             soundCircle.transform.localScale = new Vector2(14, 14);
             louderSound.gameObject.SetActive(true);
@@ -107,7 +104,6 @@ public class PlayerScript : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.C))
         {
-            walkPace = 3;
             rb.velocity = new Vector2(moveDirection.x * (moveSpeed * 0.5f), moveDirection.y * (moveSpeed * 0.5f));
             soundCircle.transform.localScale = new Vector2(5, 5);
             normalSound.gameObject.SetActive(true);
@@ -117,7 +113,6 @@ public class PlayerScript : MonoBehaviour
         }
         else
         {
-            walkPace = 2;
             rb.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
             soundCircle.transform.localScale = new Vector2(9, 9);
             audibleSound.gameObject.SetActive(true);
@@ -127,7 +122,6 @@ public class PlayerScript : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.S) == false && Input.GetKey(KeyCode.D) == false)
         {
-            walkPace = 0;
             soundCircle.transform.localScale = new Vector2(3, 3);
 
             normalSound.gameObject.SetActive(false);
@@ -135,40 +129,24 @@ public class PlayerScript : MonoBehaviour
             louderSound.gameObject.SetActive(false);
             tooLoudSound.gameObject.SetActive(false);
         }
-        if(walkPace != 0 && footstepTimer <= 0)
-        {
-            footstepTimer = walkPace * 10;
-        }
 
-        footstepTimer--;
-        if (footstepTimer < 0)
-        {
-            footstepTimer = 0;
-        }
-
-        if(footstepTimer == 1)
-        {
-            Instantiate(walkSound, this.transform);
-        }
-            
-
-        if (Input.GetKey(KeyCode.Alpha1) == true)
+        if (Input.GetKey(KeyCode.Alpha1) == true && currentWeapon != Weapons.Nigel)
         {
             currentWeapon = Weapons.Stick;
         }
-        else if (Input.GetKey(KeyCode.Alpha2) == true)
+        else if (Input.GetKey(KeyCode.Alpha2) == true && currentWeapon != Weapons.Nigel)
         {
             currentWeapon = Weapons.Nunchuckes;
         }
-        else if(Input.GetKey(KeyCode.Alpha3) == true)
+        else if(Input.GetKey(KeyCode.Alpha3) == true && currentWeapon != Weapons.Nigel)
         {
             currentWeapon = Weapons.Bat;
         }
-        else if (Input.GetKey(KeyCode.Alpha4) == true)
+        else if (Input.GetKey(KeyCode.Alpha4) == true && currentWeapon != Weapons.Nigel)
         {
             currentWeapon = Weapons.Pistol;
         }
-        else if ( Input.GetKey(KeyCode.Alpha5) == true)
+        else if ( Input.GetKey(KeyCode.Alpha5) == true && currentWeapon != Weapons.Nigel)
         {
             currentWeapon= Weapons.AR;
         }
@@ -191,7 +169,6 @@ public class PlayerScript : MonoBehaviour
             gunshotActiveAR();
         }
 
-
         if (timer > 0)
         {
             timer--;
@@ -202,8 +179,6 @@ public class PlayerScript : MonoBehaviour
             if (currentWeapon == Weapons.AR)
             {
                 Instantiate(bulletPrefab, gameObject.transform.position, transform.rotation);
-                Instantiate(gunshotPrefab, gameObject.transform.position, gameObject.transform.rotation);
-
                 gunshotTimerAR = 20;
                 gunshotActive();
                 timer = fireRateInFrames;
@@ -283,15 +258,12 @@ public class PlayerScript : MonoBehaviour
 
     private void OnAttack(InputAction.CallbackContext context)
     {
-        companionMovement.MakeCompanionMelee();
-
         if(currentWeapon == Weapons.Nunchuckes)
         {
             Instantiate(Nunchuckes, playerPos.position, Quaternion.identity);
 
             Nunchuckes weaponScriptNunchuckes = Nunchuckes.GetComponent<Nunchuckes>();
             weaponScriptNunchuckes.player = playerPos;
-            swingsound.Play();
         }
         else if (currentWeapon == Weapons.Stick)
         {
@@ -300,7 +272,6 @@ public class PlayerScript : MonoBehaviour
                 stickWeapon.gameObject.SetActive(true);
                 currentAngle = -60.0f;
                 weaponHolder.transform.localRotation = Quaternion.Euler(0, 0, currentAngle);
-                swingsound.Play();
                 swingWeapon = true;
                 
             }  
@@ -312,7 +283,6 @@ public class PlayerScript : MonoBehaviour
                 batWeapon.gameObject.SetActive(true);
                 currentAngle = -60.0f;
                 weaponHolder.transform.localRotation = Quaternion.Euler(0, 0, currentAngle);
-                swingsound.Play();
                 swingWeapon = true;
 
             }
@@ -321,14 +291,38 @@ public class PlayerScript : MonoBehaviour
         {
             Instantiate(bulletPrefab, gameObject.transform.position, transform.rotation);
             gunshotTimer = 20;
-            Instantiate(gunshotPrefab, gameObject.transform.position, gameObject.transform.rotation);
             gunshotActive();
+        }
+        else if (currentWeapon == Weapons.Nigel)
+        {
+            if(swingWeapon == false)
+            {
+                Instantiate(bulletPrefab, gameObject.transform.position, transform.rotation);
+                gunshotTimer = 20;
+                gunshotActive();
+                nigelWeapon.gameObject.SetActive(true);
+                currentAngle = -60f;
+                weaponHolder.transform.localRotation = Quaternion.Euler(0, 0, currentAngle);
+                swingWeapon = true;
+            }
         }
         else
         {
             return;
         }
 
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Onion")
+        {
+            
+            onionCollected = true;
+            //collision.gameObject.SetActive(false);
+            Debug.Log(onionCollected);
+            Debug.Log("Onion Collision");
+        }
     }
 
     private void RotateTowardsMouse()

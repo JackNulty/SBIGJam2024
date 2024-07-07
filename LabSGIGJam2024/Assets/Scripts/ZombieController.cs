@@ -18,12 +18,9 @@ public class ZombieController : MonoBehaviour
     int howLongToRemember = 30;
 
     public GameObject BloodBath;
-    public AudioSource deathNoise;
 
     void Start()
     {
-        LevelManager.score = SaveData.Dentures;
-
         if(playerRB != null)
         {
             currentTarget = playerRB.transform.position;
@@ -93,9 +90,7 @@ public class ZombieController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Weapon")
         {
-            SaveData.Dentures += 1;
             LevelManager.score += 1;
-            deathNoise.Play();
             Destroy(gameObject);
             Instantiate(BloodBath,transform.position, Quaternion.identity);
         }

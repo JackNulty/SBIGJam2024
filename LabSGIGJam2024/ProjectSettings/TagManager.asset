@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - Walls
   - NigelSquare
+  - Onion
   layers:
   - Default
   - TransparentFX
