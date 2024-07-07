@@ -39,12 +39,10 @@ public class NPCFound : MonoBehaviour
         
         if (readyToGo == true && yippee.isPlaying == false)//says yippee then fucking dies
         {
-            SaveData.NPCsSaved += 1;
             Destroy(parent);
         }
         if (readyToGo2 == true && yippee2.isPlaying == false)
         {
-            SaveData.NPCsSaved += 1;
             Destroy(parent);
         }
     }
