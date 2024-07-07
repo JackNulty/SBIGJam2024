@@ -36,9 +36,12 @@ public class NigelSquareCol : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+        if (collision.gameObject.tag == "Player")
         {
-            interactPrompt.SetActive(true);
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+            {
+                interactPrompt.SetActive(true);
+            }
         }
     }
 }
