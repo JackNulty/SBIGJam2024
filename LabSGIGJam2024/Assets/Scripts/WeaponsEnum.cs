@@ -7,4 +7,5 @@ public enum Weapons
     Bat = 3,
     Pistol = 4,
     AR = 5,
+    Nigel = 6,
 }

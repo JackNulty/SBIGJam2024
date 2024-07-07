@@ -5,6 +5,7 @@ using UnityEngine;
 public class NigelSquareCol : MonoBehaviour
 {
     public static bool activateNigelQuestMenu = false;
+    public static bool nigelQuestComp = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +22,17 @@ public class NigelSquareCol : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player" && Input.GetKey(KeyCode.Space))
         {
-            activateNigelQuestMenu = true;
+            if (PlayerScript.onionCollected != true)
+            {
+                activateNigelQuestMenu = true;
+            }
+            else if (PlayerScript.onionCollected == true)
+            {
+                nigelQuestComp = true;
+                Debug.Log(nigelQuestComp);
+                Debug.Log("NIgel quest has been complete");
+                PlayerScript.currentWeapon = Weapons.Nigel;
+            }
         }
     }
 }
