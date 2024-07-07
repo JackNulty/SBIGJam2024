@@ -39,6 +39,8 @@ public class PlayerScript : MonoBehaviour
     public AudioSource hurtSound;
     public AudioSource swingsound;
     public AudioSource shootSound;
+    public AudioSource OnionSwing;
+    public GameObject OnionChant;
     public static Weapons currentWeapon;
     private int currentWeaponIndex = 0; 
     private int maxWeaponIndex = 5; 
@@ -76,6 +78,15 @@ public class PlayerScript : MonoBehaviour
         if (currentWeapon != Weapons.Nigel)
         {
             HandleScrollInput();
+        }
+
+        if (onionCollected == true && NigelSquareCol.nigelQuestComp == false)
+        {
+            OnionChant.SetActive(true);
+        }
+        else
+        {
+            OnionChant.SetActive(false);
         }
 
 
@@ -340,6 +351,7 @@ public class PlayerScript : MonoBehaviour
                 nigelWeapon.gameObject.SetActive(true);
                 currentAngle = -60f;
                 weaponHolder.transform.localRotation = Quaternion.Euler(0, 0, currentAngle);
+                OnionSwing.Play();
                 swingWeapon = true;
             }
         }
