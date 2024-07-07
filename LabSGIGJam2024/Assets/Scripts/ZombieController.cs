@@ -18,6 +18,7 @@ public class ZombieController : MonoBehaviour
     int howLongToRemember = 30;
 
     public GameObject BloodBath;
+    public AudioSource deathNoise;
 
     void Start()
     {
@@ -94,6 +95,7 @@ public class ZombieController : MonoBehaviour
         {
             SaveData.Dentures += 1;
             LevelManager.score += 1;
+            deathNoise.Play();
             Destroy(gameObject);
             Instantiate(BloodBath,transform.position, Quaternion.identity);
         }
