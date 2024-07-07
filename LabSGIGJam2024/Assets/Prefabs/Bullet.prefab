@@ -100,6 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  bulletHitWall: {fileID: 1922529957126676980, guid: 67565812bcd0d7047be77ebf89bd0d36, type: 3}
+  bulletHitNan: {fileID: 1922529957126676980, guid: 3491807fee4c0b747948225c11896736, type: 3}
 --- !u!114 &3667830147244395604
 MonoBehaviour:
   m_ObjectHideFlags: 0

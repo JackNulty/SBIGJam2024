@@ -11,8 +11,6 @@ public class NigelMenuStarter : MonoBehaviour
     public UnityEngine.UI.Button StartButton;
     public UnityEngine.UI.Button WaitButton;
     public GameObject NigelMenu;
-    public GameObject NigelQuest;
-    public GameObject Onion;
     public static bool startNigelQuest;
     // Start is called before the first frame update
     void Start()
@@ -28,35 +26,15 @@ public class NigelMenuStarter : MonoBehaviour
         {
             NigelMenu.SetActive(true);
         }
-
-        if(startNigelQuest == true)
-        {
-            if(PlayerScript.onionCollected ==  true)
-            {
-                Onion.SetActive(false);
-            }
-            else
-            {
-                Onion.SetActive(true);
-            }
-        }
-        else
-        {
-            Onion.SetActive(false);
-        }
     }
 
     public void onStartButtonPressed()
     {
-        NigelQuest.SetActive(true);
-        NigelMenu.SetActive(false);
         startNigelQuest = true;
-        NigelSquareCol.activateNigelQuestMenu = false;
     }
 
     public void onWaitButtonPressed()
     {
-        NigelMenu.SetActive(false);
         NigelSquareCol.activateNigelQuestMenu = false;
     }
 }
