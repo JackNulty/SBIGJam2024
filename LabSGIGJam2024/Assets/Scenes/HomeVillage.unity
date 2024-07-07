@@ -6443,7 +6443,6 @@ GameObject:
   - component: {fileID: 2066727841}
   - component: {fileID: 2066727840}
   - component: {fileID: 2066727839}
-  - component: {fileID: 2066727838}
   - component: {fileID: 2066727843}
   - component: {fileID: 2066727842}
   - component: {fileID: 2066727844}
@@ -6455,43 +6454,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2066727838
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2066727837}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01576400a6bbc5447a6949bd8eec1c67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 5
-  rb: {fileID: 2066727843}
-  playerPos: {fileID: 2066727841}
-  Nunchuckes: {fileID: 0}
-  stick: {fileID: 0}
-  bulletPrefab: {fileID: 0}
-  player: {fileID: 2066727837}
-  soundCircle: {fileID: 0}
-  weaponHolder: {fileID: 0}
-  stickWeapon: {fileID: 0}
-  batWeapon: {fileID: 0}
-  assaultRifle: {fileID: 0}
-  visualPistol: {fileID: 0}
-  NigelActivationSquare: {fileID: 0}
-  gunshotPrefab: {fileID: 0}
-  walkSound: {fileID: 0}
-  lowSound: {fileID: 0}
-  normalSound: {fileID: 0}
-  audibleSound: {fileID: 0}
-  louderSound: {fileID: 0}
-  tooLoudSound: {fileID: 0}
-  hurtSound: {fileID: 0}
-  swingsound: {fileID: 0}
-  shootSound: {fileID: 0}
-  fireRateInFrames: 3
 --- !u!114 &2066727839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6670,6 +6632,7 @@ MonoBehaviour:
   rb: {fileID: 2066727843}
   playerPos: {fileID: 2066727841}
   player: {fileID: 2066727837}
+  walkSound: {fileID: 1922529957126676980, guid: de0ebce0505f98e4ebeebaf3a5749dad, type: 3}
 --- !u!114 &2066727845
 MonoBehaviour:
   m_ObjectHideFlags: 0
