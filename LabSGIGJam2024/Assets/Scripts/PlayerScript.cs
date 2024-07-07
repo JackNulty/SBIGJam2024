@@ -25,9 +25,11 @@ public class PlayerScript : MonoBehaviour
     public GameObject weaponHolder;
     public GameObject stickWeapon;
     public GameObject batWeapon;
+    public GameObject nigelWeapon;
     public GameObject assaultRifle;
     public GameObject visualPistol;
     public GameObject NigelActivationSquare;
+    public GameObject Onion;
     public Image lowSound;
     public Image normalSound;
     public Image audibleSound;
@@ -41,6 +43,7 @@ public class PlayerScript : MonoBehaviour
     private float lastScrollTime;
     int currentPlayerHealth = 100;
     public static int playerHealth = 100;
+    public static bool onionCollected = false;
 
     bool swingWeapon = false;
     float currentAngle = 0.0f;
@@ -64,9 +67,10 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
         RotateTowardsMouse();
-        HandleScrollInput();
-
-        
+        if(currentWeapon != Weapons.Nigel)
+        {
+            HandleScrollInput();
+        }
     }
 
     private void FixedUpdate()
@@ -85,6 +89,7 @@ public class PlayerScript : MonoBehaviour
             {
                 stickWeapon.gameObject.SetActive(false);
                 batWeapon.gameObject.SetActive(false);
+                nigelWeapon.gameObject.SetActive(false);
                 swingWeapon = false;
             }
         }
@@ -125,23 +130,23 @@ public class PlayerScript : MonoBehaviour
             tooLoudSound.gameObject.SetActive(false);
         }
 
-        if (Input.GetKey(KeyCode.Alpha1) == true)
+        if (Input.GetKey(KeyCode.Alpha1) == true && currentWeapon != Weapons.Nigel)
         {
             currentWeapon = Weapons.Stick;
         }
-        else if (Input.GetKey(KeyCode.Alpha2) == true)
+        else if (Input.GetKey(KeyCode.Alpha2) == true && currentWeapon != Weapons.Nigel)
         {
             currentWeapon = Weapons.Nunchuckes;
         }
-        else if(Input.GetKey(KeyCode.Alpha3) == true)
+        else if(Input.GetKey(KeyCode.Alpha3) == true && currentWeapon != Weapons.Nigel)
         {
             currentWeapon = Weapons.Bat;
         }
-        else if (Input.GetKey(KeyCode.Alpha4) == true)
+        else if (Input.GetKey(KeyCode.Alpha4) == true && currentWeapon != Weapons.Nigel)
         {
             currentWeapon = Weapons.Pistol;
         }
-        else if ( Input.GetKey(KeyCode.Alpha5) == true)
+        else if ( Input.GetKey(KeyCode.Alpha5) == true && currentWeapon != Weapons.Nigel)
         {
             currentWeapon= Weapons.AR;
         }
@@ -288,11 +293,36 @@ public class PlayerScript : MonoBehaviour
             gunshotTimer = 20;
             gunshotActive();
         }
+        else if (currentWeapon == Weapons.Nigel)
+        {
+            if(swingWeapon == false)
+            {
+                Instantiate(bulletPrefab, gameObject.transform.position, transform.rotation);
+                gunshotTimer = 20;
+                gunshotActive();
+                nigelWeapon.gameObject.SetActive(true);
+                currentAngle = -60f;
+                weaponHolder.transform.localRotation = Quaternion.Euler(0, 0, currentAngle);
+                swingWeapon = true;
+            }
+        }
         else
         {
             return;
         }
 
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Onion")
+        {
+            
+            onionCollected = true;
+            //collision.gameObject.SetActive(false);
+            Debug.Log(onionCollected);
+            Debug.Log("Onion Collision");
+        }
     }
 
     private void RotateTowardsMouse()
